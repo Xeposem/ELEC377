@@ -1,0 +1,21 @@
+Script started on Sun 27 Sep 2020 02:31:10 PM EDT
+student@ELEC377-Student:~/ELEC377-Group-35/lab1$ pwd
+/home/student/ELEC377-Group-35/lab1
+student@ELEC377-Student:~/ELEC377-Group-35/lab1$ cd
+student@ELEC377-Student:~$ pwd
+/home/student
+student@ELEC377-Student:~$ ls
+ELEC377-Group-35
+student@ELEC377-Student:~$ cd ELEC377-Group-35/
+student@ELEC377-Student:~/ELEC377-Group-35$ ls
+lab0  lab1  ssh
+student@ELEC377-Student:~/ELEC377-Group-35$ pwd
+/home/student/ELEC377-Group-35
+student@ELEC377-Student:~/ELEC377-Group-35$ ls -a
+.  ..  .git  lab0  lab1  ssh
+student@ELEC377-Student:~/ELEC377-Group-35$ ls asdfjkl
+ls: asdfjkl: No such file or directory
+student@ELEC377-Student:~/ELEC377-Group-35$ cd asdjfkl
+bash: cd: asdjfkl: No such file or directory
+student@ELEC377-Student:~/ELEC377-Group-35$ exit
+Script done on Sun 27 Sep 2020 02:32:14 PM EDT

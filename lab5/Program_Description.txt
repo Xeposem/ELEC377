@@ -1,0 +1,93 @@
+Code Documentation
+
+William Du/20100436
+Ruijie Ji/20108157
+
+File names: 
+			exploit.nasm
+			selfcomp.c
+			client.c
+			
+Objective:
+			The objective of this lab is to exploit the fact that the gets function used by a server doesn't check the bounds 
+			of the array when reading. Since the function pointer is located after the global buffer in memory, when the input 
+			is longer than the buffer, the function pointer is overwritten. 
+			
+Code description:
+		exploit.nasm:
+			The exploit was written in assembly for the x86 architecture. What we want the server to do is execute the command:
+			>sh -c "cat /etc/passwd; exit"
+			
+			This will cause the server to print out the contents of the /etc/passwd file that we normally would not have access
+			to.
+			
+			In order to do this, we do a system call to execute the "execve" command using the trap instruction (int 0x80). This
+			replaces the runing server program with the command above. To do this system call, the assembly code must first set
+			up the correct arguments in the correct registers so that they can be used by the system call when the trap
+			instruction is executed.
+			
+			The numberic code for the "execve" system call is 0x0b in Linux. This is stored in the eax register.
+			The name of the command to execute is "/bin/sh" which is the shell, this is stored in the ebx register.
+			The ecx register holds a pointer to the array of arguments for the command.
+				The first parameter is the name of the command which is just the same as in the ebx register.
+				The second parameter is the "-c" part of the command which tells it to execute the following command.
+				The third parameter is the "cat /etc/passwd; exit" part which tells it to print the contents of the passwd file.
+				The fourth argument doesn't have any value so it is set to null.
+			
+			These strings are stored as simple byte arrays and as such they can contain null and newline hexvalues. In order for
+			the exploit to function properly, there cannot be any newline or null characters in the machine code since those
+			characters are what terminates the gets function. We want gets to read our whole program. So the first thing we need
+			to do is figure out how to get rid of those null and newline hexvalues. The first thing to do is to figure out where
+			we are in memory in order to get the effective memory address of our data at runtime. This is done by first jumping 
+			to the start of the data and making a call instruction to the start of our program. This call will store the return 
+			address onto the stack, which we then pop off and store in the esi register. Now that we have the start of the data,
+			we can get the address of our data at runtime.
+			
+			The first line after the pop clears the eax register by using the xor command with itself, this gets around using the
+			null character. The next four lines calculate the runtime address of the four data and sets the last byte to null at
+			runtime. This removes the need to have the null character in the actual machine code. When trying to move the null
+			character to the end of the "-c" string, it turned out that it was exactly 10 characters from the beginning of the
+			data. To get around this, a y was added to the end of the string and instead of subtracting 1 in the calculation, we
+			subtracted 2.
+			Since the eax register was already cleared, we can safely move 0x0B to only the lower 8-bits of the register which
+			gets rid of the redundant null hexvalues. 
+			"/bin/sh" is already stored in the esi register so we can simply move that into the ebx register.
+			The command string was moved into the ecx register using the lea command similar to previous lines of the program.
+			The edx register was cleared using the xor trick.
+			Finally, the trap instruction is executed.
+			The size of the program was retrieved by adding the following line at the end of the data segment:
+			newAddr:	dd newAddr-start
+			The size of the program ended up being 0x61.
+			
+		selfcomp.c:
+			Required string size:       100 + 4 + 1 = 105
+			Number of NOP instructions: 3
+			Required return address:    0x08049740
+			
+			Firstly, to demonstrate the concept, this attack was done on a local global memory in the selfcomp.c file. The
+			first step was to figure out the size of the global buffer. This was done through trial and error, adding enough 'x'
+			characters in the array copied to the buffer so that when the segmentation fault occurs, the segmentation fault is
+			right at the end of the 'x' characters and the core dump shows the hex values for 'WXYZ' which is the address for
+			the function we want to overwrite. After getting the right number of x's, we then checked the values in the .bss
+			file for local executables using the debugger and found that the starting address of the global buffer was
+			0x08049740. The size of the array containing the exploit code was calculated by adding the size of the buffer, which
+			was the number of x's, plus 4 for the 'WXYZ', and plus 1 for the null character at the end. The size of the array
+			ended up being 105 (100+4+1). Then, NOP characters needed to be added to the exploit code in the array to pad empty
+			spaces and align the return address. The padded was calculated by subtracting the size of the program from the size 
+			of the buffer. This ended up being 3 (100 dec -> 64 hex, then 64 - 61 = 3).
+			
+		client.c:
+			Required string size:       128 + 4 + 2 = 134
+			Number of NOP instructions: 31
+			Required return address:    0x08049c40
+			
+			The client essentially works the same way as the selfcomp does. The only major difference lies in that the client
+			program sends a string, in our case the exploit, to the server. The server uses the gets function to read in the
+			data from the client, as such, the client has a newline before the null character. This is required to allow the gets
+			function to return. The address of the buffer, size of the string, and number of NOP instructions also need to be
+			changed. The same process from the selfcomp was used and the size of the array ended being 134, the number of NOP
+			instructions turned out to be 31, and the starting address of the global buffer was 0x08049c40.
+			
+			After the server reads the exploit string, the exploit is run on the machine running the server which is just the local
+			host in this lab. The contents of the passwd file will be sent over to the client, thereby printing the contents of the
+			passwd to the client.

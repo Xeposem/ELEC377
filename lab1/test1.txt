@@ -1,0 +1,30 @@
+Script started on Tue 22 Sep 2020 12:06:41 PM EDT
+student@ELEC377-Student:~/ELEC377-Group-35/lab1$ shell
+%> pwd
+/home/student/ELEC377-Group-35/lab1
+%> cd
+%> pwd
+/home/student
+%> ls
+ELEC377-Group-35
+%> cd ELEC377-Group-35
+%> ls
+lab0
+ssh
+lab1
+%> pwd
+/home/student/ELEC377-Group-35
+%> ls -a
+.
+..
+.git
+lab0
+ssh
+lab1
+%> ls asdfjlk
+Invalid Second Argument
+%> cd asdfjkl
+Directory Does Not Exist
+%> exit
+student@ELEC377-Student:~/ELEC377-Group-35/lab1$ exit
+Script done on Tue 22 Sep 2020 12:08:29 PM EDT

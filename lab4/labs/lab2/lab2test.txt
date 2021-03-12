@@ -1,0 +1,63 @@
+============================================
+
+
+ Module:  lab2.c
+
+ Purpose: This file provides a kernel module that 
+     prints the list of active processes giving
+     the process id, the userid, the total number
+     of VM pages and the number of VM pages that are resident.
+
+
+
+ Name: my_read_proc:
+
+  Purpose:
+   this function that will be called by the kernel when
+   the user reads the /proc/lab2 file. The first time the proc
+   is read (fpos is 0) we return the headers and the data for
+   the first process. On subsequent calls we return the data
+   for the next process. We return EOF when we have reached
+   the first proc.
+
+   Parameters:
+       page  the buffer provided by the kernel
+	 start  point to pointer to indicate which buffer was  used
+	 fpos  the postion in the file
+	 blen  the length of page (ignored)
+	 eof   pointer to indicate end of file
+	 data  module private data pointer (ignored)
+
+   Return value:
+	int  The number of bytes written into the buffer
+
+
+ Name: init_module
+
+  Purpose:
+	Called by the kernel to initialize
+      any data structures used by the module when
+      the module is loaded. In this case we will
+      add our file entry to the /proc file system
+
+  Parameters:
+	None
+
+ Return value
+      int  0 on success, non-zero for failure
+
+
+ Name: cleanup_module
+
+ Purpose:
+	 Called by the kernel to deallocate
+      any data structures used by the module when
+      the module is removed from the kernel. In our
+      case we remove the entry from the /proc file system
+
+  Parameters:
+	None
+
+ Return value
+      none
+

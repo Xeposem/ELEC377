@@ -1,0 +1,17 @@
+Testing Documentation
+
+William Du/20100436
+Ruijie Ji/20108157
+
+To test the validity of the attack, two test files were created, "selfcompOutput.txt" and "clientOutput.txt".
+The first test was on selfcomp.c. After adding the right amount of X's, in the string array, the correct length was
+determined to allow for the alignment of the return address. The debugger was then used to find the address of the .bss,
+and then we found where the start of the buffer was in that .bss by taking the starting address of the bss, using the command
+x/16c address to see the contents at that address, and incremendting the address by 0x10 until the X's started showing up,
+representing the start of the buffer. This resulted in a successful attack as seen from the testing file "selfcompOutput.txt".
+"selfcompOutput.txt" contains a list of information from the passwd file that originally is not accessable.
+
+The second test was on the server. After adjusting the code to work with the server, the output was pipped to the testing file
+"clientOutput.txt". When comparing the two test files, they are exactly the same which shows that the attack on the server was
+successful as well. The reason that the two files are the same is because the server is hosted on the local device so obviously the
+passwd file read by selfcomp and the attack on the server are the same.

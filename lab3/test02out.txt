@@ -1,0 +1,8 @@
+Hello
+This is a test!
+This is the end of file 1.
+This is the start of the second file!
+The next line will be empty:
+
+This is the end of the file.
+

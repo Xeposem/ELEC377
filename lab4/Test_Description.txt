@@ -1,0 +1,17 @@
+Testing Documentation
+
+William Du/20100436
+Ruijie Ji/20108157
+
+To test the validity of the script files, test files were made. To test the first script file "printDoc.sh", a test file was 
+made for each directory in the "labs" directory. As such, four test files were made: lab0test.txt, lab1test.txt, lab2test.txt, 
+and lab3test.txt. These test files were made by piping the output of printDoc.sh to the test files for each of the respective 
+directories. Looking at lab0test.txt first, the two files "lab0mod.c" and "lab0user.c" were found. The correct comments were 
+also extracted from the files. Only the comments that were in the blocks starting with "//+" and ending with "//-" were 
+extracted, normal comments were not. Also, all the "//+", "//-", and "//" at the start of the lines were removed as intended. 
+This result is the same when comparing the rest of the testing results.
+To test the second script file "progStats.sh", a single test file was created named "progStatsTest.txt" using the script 
+command. From the test file, we see that the correct main files and module files are found. The count for printf is also 
+correctly not double counting "fprintf". This can be confirmed by looking at the result from the test file and manually 
+counting the number of printf and fprintf statements in the file. The line numbers listed for the printk statements that appear 
+in the module files are also found correctly.

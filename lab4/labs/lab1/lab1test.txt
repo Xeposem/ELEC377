@@ -1,0 +1,117 @@
+============================================
+
+
+ File:	shell.c
+
+ Pupose: 	This program implements a simple shell program. It does not start
+		processes at this point in time. However, it will change directory
+		and list the contents of the current directory.
+
+		The commands are:
+		   cd name > change to directory name, print an error if the directory doesn't exist.
+		              If there is no parameter, then change to the home directory.
+		   ls > list the entries in the current directory.
+			      If no arguments, then ignores entries starting with .
+			      If a then all entries
+		   pwd > print the current directory.
+		   exit > exit the shell (default exit value 0)
+
+		if the command is not recognized an error is printed.
+
+
+ Function:    main
+
+ Purpose: 	Starting point of the program. This contains
+		the command loop. Removes the newline, splits
+		the command line into words, and executes the command.
+		Exits on EOF, or if the exit function is called.
+
+
+ Function:	skipChar
+
+ Purpose:	This function skips over a given char in a string
+		For security, will not skip null chars.
+
+ Parameters:
+    charPtr	Pointer to string
+    skip	character to skip
+
+ Returns:	Pointer to first character after skipped chars
+		ID function if the string doesn't start with skip,
+		or skip is the null character
+
+
+ Funtion:	splitCommandLine
+
+ Purpose:	This splits a string into an array of strings.
+		The array is passed as an argument. The string
+		is modified by replacing some of the space characters
+		with null characters to terminate each of the strings.
+
+ Parameters:
+	commandBuffer	The string to split
+	args		An array of char pointers
+	maxargs		Size of array args (max number of argyments)
+
+ Returns:	Number of arguments (< maxargs).
+
+
+
+ Function:	doCommand
+
+ Purpose:	This command calls a command handling funciton from
+		the commands array based on the first argument passed
+		in the args array.
+
+ Parameters:
+	args	command and parameters, an array of pointers to strings
+	nargs	number of entries in the args array
+
+ Returns	nothing (void)
+
+
+ Function:	all handling funcionts
+
+ Purpose:	this command performs the funcdtion
+		associated with the commands.
+		The name of the comomand is in first argument.
+	 	Since it is called by doCommand, it is known
+		that arg is at least one element long
+
+ Parameters:
+	args	command and parameters, an array of pointers to strings
+	nargs	number of entries in the args array
+
+ Returns	nothing (void)
+
+
+ Function:    exitFunc
+ Purpose:	exit the shell
+
+
+ Function:    pwdFunc
+ Purpose:     print the working directory
+
+
+ Function:    isHidden
+ Purpose:     utility funcdtion for ls command Function
+ 		returns true if the directory entry starts
+ 		with a dot ('.')
+ Prameters:	sturct dirent *d  pointer to directory entity structure
+
+ Returns:	int (true or false)
+
+
+ Function:    pwdFunc
+ Purpose:     list the contents of the current directory
+  		default is to ignore hidden files
+  		argument "a" means to list all files
+
+
+ Function:    lsFunc
+ Purpose:     change the current working directory
+   		default is to the home directory
+   		if an argument attempt to change
+   		to the given directory
+   		report an error if the directory does not exist
+

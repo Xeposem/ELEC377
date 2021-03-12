@@ -1,0 +1,11 @@
+Documentation  					3.5		out of 3.5
+Testing Docs 					3.5		out of 3.5
+Code correctness 				1.5		out of 1.5
+Code Clairty (organization) 	1.5		out of 1.5
+Total 							10		out of 10
+
+
+Comments:
+Everything's perfect.
+Good comments, test doc, code doc, and test.
+Just to clarify a point in your test description, it is possible that the consumer does not print the output in order of the producers. For more information, see the second sample from solutions in onQ.

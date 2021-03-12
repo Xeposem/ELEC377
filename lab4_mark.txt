@@ -1,0 +1,10 @@
+Documentation  					3.5		out of 3.5
+Testing Docs 					3.5		out of 3.5
+Code correctness 				1.5		out of 1.5
+Code Clairty (organization) 	1.5		out of 1.5
+Total 							10.0		out of 10.0
+
+
+Comments:
+Good test and code documentations.
+All of the scripts worked with no problems.

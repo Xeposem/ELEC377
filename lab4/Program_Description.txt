@@ -1,0 +1,59 @@
+Code Documentation
+
+William Du/20100436
+Ruijie Ji/20108157
+
+
+File names: printDoc.sh
+            progStats.sh
+
+Objective:
+   The main purpose of lab4 is to utilize the knowledge in shell programming to write two scripts, including extracting 
+   formatted comments from a series of files and analyzing the files and printing out accurate information.
+
+Code description:
+   The lab is divided into 2 scripts.
+
+   The first script is built to extract and print out all the formatted comments that start with //+ and end with //- from 
+   C source files.
+
+   for file in `find . -name '*.c' -or -name '*.h'`:
+      The for loop finds all files in the current directory that end in .c and .h and stores each file name to a variable 
+      called 'file'. The find statement in backquotes is the parameter to a file.
+
+   sed -e '/\/\/+/,/\/\/-/p' -e 'd' $file | sed -e 'sX//XX' -e 'sX+XX' -e 'sX-XX':
+      In the do command, the first sed command is used to search for the lines that start with //+ and end with //-, and 
+      then to extract those lines using the p command. The second sed command removes the //, //+, and //-. The X following 
+      the s command is the delimiter for the substitution. The two separated sed commands are connected by a pipe('|') that 
+      sends the output from the first sed to the second one.
+
+   The second script finds all the files in the current directory that end in .c and displays the required information. 
+   Specifically, it prints out the full path of each main file with the number of the occurrences of printf and fprintf, 
+   and the full path of each module file with the number of lines that contain printk. The awk command is used to format
+   the output for the results of the main function analysis.
+
+   $# != 1:
+      $# contains the number of arguments. The first step is to compare the number of arguments after the command on the 
+      command line to value 1, if the number of arguments is not equal to 1, an error message will be printed.
+
+   If `find .$1 -type d -name $1`:
+      $1 represents the first argument after the command and the find command is used to check if the first argument passed
+      to the script is a directory. The exit status of the command will be 0 if the directory $1 exits, non-zero value 
+      otherwise.
+   
+   If `grep -q 'int main' $file`:
+      The grep command sets the exit status to be 0 if "int main" is found inside the source file. If no main file is found, 
+      then the correct error message will be printed output will be no main files.
+
+   `grep -c printf $file` and `grep -c fprintf $file`:
+      The command grep -c printf $file counts the number of lines in the file that contains printf and the command grep -c 
+      printf $file counts the number of lines in the file that contains fprintf. Since fprintf also contains the string 
+      printf, we need to calculate the actual number of printf by subtracting the count of fprintf from the count of printf.
+   
+    If `grep -q 'init_module' $file`:
+      The grep command sets the exit status to be 0 if "init_module" is found inside the module file. If no module file is 
+      found, then the output will be no module files.
+
+   `grep -n 'printk' $file | sed "s/[^0-9]//g" | sed -r "s/(.*)0/\1 /" | tr '\n' ',' | sed "s/ //g" | sed -r 's/(.*),/\1 /'`
+      The command grep -n is used to print the line numbers in front of the lines that contain the printk. The sed command is
+      used to remove any character that is not a digit and tr command is used to change the next line characters to commas.

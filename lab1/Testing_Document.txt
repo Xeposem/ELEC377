@@ -1,0 +1,11 @@
+From the script document "test1.txt" which shows the input and output of the shell program, the commands pwd, cd, and ls were   shown to be working as intended.
+The pwd command shows that the current directory is "/home/student/ELEC377-Group-35/lab1". After entering the cd command with no
+second argument changes the directory to the home directory, this is shown by using the pwd command once again which outputs
+"/home/student". When entering the ls command, the contents of the directory is listed and we can see that there is only the
+"ELEC377-Group-35" directory. After entering the cd command again with the second argument "ELEC377-Group-35", we change our 
+directory to "/home/student/ELEC377-Group-35" as shown by ls listing new contents of the directory and the pwd command. The ls
+command is entered again with the second argument "-a" to show hidden files as well. This also works because more contents are
+listed, specifically the contents that start with ".". Next, the commands ls and cd are entered with second arguments that
+are invalid and it can be seen that an error is outputed since they are invalid. Finally, the exit command is entered and the
+program is terminated as we return to the linux shell.
+A second script documrnt "shelltest.txt" shows the same commands in the same order producing the same results.

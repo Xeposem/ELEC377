@@ -1,0 +1,58 @@
+Code Documentation
+
+William Du/20100436
+Ruijie Ji/20108157
+
+
+File names: common.c
+            common.h
+            producer.c
+            consumer.c
+
+Objective: Write a C program that demonstrates inter process communication which allows processes to communicate with 
+	   each other and synchronize. The producer-consumer problem lies in that the producer shouldn't 
+	   try to add data into the buffer if the buffer is full, and the consumer should not be removing data from an
+	   empty buffer.
+
+Code description:
+
+	The code is divided into 3 files/programs. (common, producer, and consumer)
+	The first file is the common.c and common.h files. The common.h file is just the header file for the common.c file.
+		The common.h file consists of the shared struct and two functions, getMutex and releaseMutex used to occupy and
+		release a resource. The common.c file implements common.h and adds the additional function test_and_set which
+		returns a memory location as an atomic operation.
+	The second file is the producer.c file. The producer first gets the shared memory, then takes inputs and places it in
+		the buffer in the shared memory.
+        The last file is the consumer.c file. The consumer also first gets the shared memory, then takes everything that is in
+		the shared buffer and outputs it while also removing it from buffer.
+
+
+	The file common.h is the common definition of the shared memory segment and has the prototypes for the semaphore functions.
+	common.c contains the routines used from both the producer and the consumer, as well as the routine for Mutual Exclusion.
+		The first function in common.c is the test_and_set function. This function prevents any other process from beginning 
+		until the first process is done with the resource.
+		The getMutex function gets the resource only when the resource is free.
+		The releaseMutex frees the resource.
+
+	The producer program takes inputs and puts it into the shared buffer for the consumer.
+		First, the shared memory is accessed, and the process claims the resource. The program continues to loop
+		until there is no more inputs.
+		The buffer size is also limited so once the buffer is full, the resource will be freed to allow the consumer
+		to remove the data from the buffer.
+
+
+	The consumer removes and outputs data from the shared buffer one piece at a time.
+		First, the shared memory is accessed, and the process claims the resource. The program then continues to remove and
+		output the data from the buffer.
+		Once there is no more data from the buffer, the program updates the local number of producers and frees the resource
+		to allow any other producers to write to the buffer.
+
+
+	test_and_set(int* lock): Function used to fetch a resource and allows for Mutual Exclusion.
+		Use __cmpxchg() function to achieve synchronization.
+
+	getMutext(int* lock): Function used to fetch the shared resource.
+		Use while loop with test_and_set(lock) function as condition to wait for Mutual Exclusion.
+
+	releaseMutex(int* lock): Function used to free the resource so that another process can claim it.
+

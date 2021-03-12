@@ -1,0 +1,9 @@
+Ruijie Ji | 20108157 
+William Du | 201004346
+
+Two testing files, "psout.txt" and "lab2out.txt" were made to show the output of the ps command from the kernel and the output
+of our kernel module respectively. Apart from some spacing difference, it can be seen that the output from the kernel and our
+module are exactly the same except for the last line. This can be attributed to the fact that what is being output is the
+information of processes. Since we are inputing commands, this sends new tasks to the processor which creates a new task, as
+such, since the last process is the one we just inputed and it gets completed immediately, the information regarding the last
+process shown between the two test files is different.

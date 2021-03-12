@@ -1,0 +1,10 @@
+Testing Documentation
+
+William Du/20100436
+Ruijie Ji/20108157
+
+To test the validity of the program, two test files, test00in.txt and test01in.txt, were made as inputs to test the program. 
+They each contained lines of text that were different to each other. Then, two producer processes were run at the same time 
+using the two test files as inputs and the output of the consumer process was streamed into the test file test02out.txt. 
+From test02out.txt, it can be seen that each byte was transferred a single time in the proper order from producer to consumer, 
+and that all the lines of test00in.txt were printed before the lines from test01in.txt were printed.

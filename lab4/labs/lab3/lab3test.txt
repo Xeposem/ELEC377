@@ -1,0 +1,132 @@
+============================================
+
+
+ Name: common.c
+
+ Purpose: contains routines to be used by both the producer,
+       and the consumer. 
+       Mutual Exclusion routines are here.
+
+
+ Function: test_and_set
+
+  Purpose: C wrapper for the xmpxchng machine languate instruction.
+   Reads the value of the lock variable and sets it to 1.
+
+  Paramters:
+	lock  the address of the shared lock variable
+
+  Returns
+	The value of lock variable from the exchange.
+
+
+  getMutex  The C implemenation of the spinlock test
+   and set approach. This function busy waits until the
+   lock is false and then sets it to true.
+
+  Paramters:
+	lock  the address of the shared lock variable
+
+  Returns
+	Nothing
+
+
+  releaseMutex  The C implemenation of the spinlock test
+   and set approach. This sets the lock to false.
+
+  Paramters:
+	lock  the address of the shared lock variable
+
+  Returns
+	Nothing
+
+============================================
+
+
+  Name: common.h
+
+  Purpose: Common definiton of the shared memory segment
+     and prototypes for semaphore functions
+ 
+  Created by Thomas Dean
+  Copyright 2005 Queen's University.
+
+
+
+ Name: shared
+
+ Purpose: 
+   Defines the variables in the shared memory segment
+
+ Fields:
+    lock  the shared lock varible
+    buffer  the array used for the fifo queue
+    inPtr  the array index at which elements are inserted.
+    outPtr  the array index at which elements are removed.
+    count  the number of elements in the queue
+    prodCount  the number of running producers.
+
+============================================
+
+
+ Name:  consumer.c
+
+ Purpose: this file implements the consumer using a
+   shared segement and a simple implementatin of mutual exclusion.
+
+
+ Name:  main
+
+ Purpose: This is the main function. It implements the conumer using a
+   shared segement and a simple implementatin of mutual exclusion.
+
+ Parameters:
+	argc  count of command line arguments (ignored)
+	argv  array of command line arguments (ignored)
+
+ Parameters:
+      int
+
+============================================
+
+
+ Name:  meminit.c
+
+ Purpose: This file creates and initializes a shared memory segment.
+
+
+ Name:  main
+
+ Purpose: This is the main function. It creates a shared memory
+   segment if it does not alreay exist. The id of the shared
+   memory segement is attached to the current directory. After
+   creration, it is mapped and initialized to Zero.
+
+ Parameters:
+	argc  count of command line arguments (ignored)
+	argv  array of command line arguments (ignored)
+
+ Parameters:
+      int
+
+============================================
+
+
+ Name:  producer.c
+
+ Purpose: this file implements the producer using a
+   shared segement and a simple implementatin of mutual exclusion.
+
+
+ Name:  main
+
+ Purpose: This is the main function. It implements the producer using a
+   shared segement and a simple implementatin of mutual exclusion.
+
+ Parameters:
+	argc  count of command line arguments (ignored)
+	argv  array of command line arguments (ignored)
+
+ Parameters:
+      int
+

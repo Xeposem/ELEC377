@@ -1,0 +1,22 @@
+Script started on Sun 27 Sep 2020 05:25:26 PM EDT
+student@ELEC377-Student:~/ELEC377-Group-35/lab1$ shell
+%> this is a sentence   
+4
+0: this
+1: is
+2: a
+3: sentence
+Error: No match for this
+%> th     this     is  a     sentence
+4
+0: this
+1: is
+2: a
+3: sentence
+Error: No match for this
+%> exit
+1
+0: exit
+student@ELEC377-Student:~/ELEC377-Group-35/lab1$ exit
+
+Script done on Sun 27 Sep 2020 05:25:54 PM EDT

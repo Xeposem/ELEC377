@@ -1,0 +1,11 @@
+Documentation					3.50	out of 3.5
+Testing Docs					3.50	out of 3.5
+Code correctness				1.50	out of 1.5
+Code Clairty (organization)		1.50	out of 1.5
+Total							10.0	out of 10
+
+
+Comments:
+The code compiled and worked correctly.
+The test and code documentations and comments are very good.
+Please consider adding some structure to your docs. Please refer to any code documentations online or see the solutions in onQ as an example.
